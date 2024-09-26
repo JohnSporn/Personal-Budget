@@ -1,0 +1,23 @@
+﻿@page "/"
+@attribute [Authorize]
+@using Budget.Models
+@inject AuthenticationStateProvider AuthenticationStateProvider
+
+<PageTitle>Home</PageTitle>
+
+@code {
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            var authUser = new User
+            {
+                Name = user.FindFirst(x => x.Type == "name").Value,
+                Email = user.FindFirst(x => x.Type == "email").Value,
+            };
+        }
+    }
+}
