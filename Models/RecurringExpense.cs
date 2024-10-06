@@ -1,13 +1,12 @@
-﻿using System.Runtime.CompilerServices;
-
-namespace Budget.Models
+﻿namespace Budget.Models
 {
     public class RecurringExpense
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public string Description { get; set; }
         public decimal Amount { get; set; }
-        public Frequency Frequency { get; set; }
-        public DateTime NextDueDate { get; set; }
+        public Frequency PaymentFrequency { get; set; }
+        public DateTime PaymentDate { get; set; }
     }
 }
