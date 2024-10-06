@@ -1,0 +1,64 @@
+﻿@page "/recurringexpenses/create"
+@using Microsoft.EntityFrameworkCore
+@using Budget.Models
+@inject IDbContextFactory<Budget.Data.BudgetContext> DbFactory
+@inject NavigationManager NavigationManager
+
+<PageTitle>Create</PageTitle>
+
+<h1>Create</h1>
+
+<h2>RecurringExpense</h2>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <EditForm method="post" Model="RecurringExpense" OnValidSubmit="AddRecurringExpense" FormName="create" Enhance>
+            <DataAnnotationsValidator />
+            <ValidationSummary class="text-danger" />
+            <div class="mb-3">
+                <label for="name" class="form-label">Name:</label> 
+                <InputText id="name" @bind-Value="RecurringExpense.Name" class="form-control" /> 
+                <ValidationMessage For="() => RecurringExpense.Name" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="description" class="form-label">Description:</label> 
+                <InputText id="description" @bind-Value="RecurringExpense.Description" class="form-control" /> 
+                <ValidationMessage For="() => RecurringExpense.Description" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="amount" class="form-label">Amount:</label> 
+                <InputNumber id="amount" @bind-Value="RecurringExpense.Amount" class="form-control" /> 
+                <ValidationMessage For="() => RecurringExpense.Amount" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="paymentfrequency" class="form-label">PaymentFrequency:</label> 
+                <InputText id="paymentfrequency" @bind-Value="RecurringExpense.PaymentFrequency" class="form-control" /> 
+                <ValidationMessage For="() => RecurringExpense.PaymentFrequency" class="text-danger" /> 
+            </div>        
+            <div class="mb-3">
+                <label for="paymentdate" class="form-label">PaymentDate:</label> 
+                <InputDate id="paymentdate" @bind-Value="RecurringExpense.PaymentDate" class="form-control" /> 
+                <ValidationMessage For="() => RecurringExpense.PaymentDate" class="text-danger" /> 
+            </div>        
+            <button type="submit" class="btn btn-primary">Create</button>
+        </EditForm>
+    </div>
+</div>
+
+<div>
+    <a href="/recurringexpenses">Back to List</a>
+</div>
+
+@code {
+    [SupplyParameterFromForm]
+    private RecurringExpense RecurringExpense { get; set; } = new();
+
+    // To protect from overposting attacks, see https://learn.microsoft.com/aspnet/core/blazor/forms/#mitigate-overposting-attacks.
+    private async Task AddRecurringExpense()
+    {
+        using var context = DbFactory.CreateDbContext();
+        context.RecurringExpense.Add(RecurringExpense);
+        await context.SaveChangesAsync();
+        NavigationManager.NavigateTo("/recurringexpenses");
+    }
+}

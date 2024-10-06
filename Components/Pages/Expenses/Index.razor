@@ -1,0 +1,40 @@
+﻿@page "/recurringexpenses"
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.AspNetCore.Components.QuickGrid
+@using Budget.Models
+@using Budget.Data
+@implements IAsyncDisposable
+@inject IDbContextFactory<Budget.Data.BudgetContext> DbFactory
+
+<PageTitle>Index</PageTitle>
+
+<h1>Index</h1>
+
+<p>
+    <a href="recurringexpenses/create">Create New</a>
+</p>
+
+<QuickGrid Class="table" Items="context.RecurringExpense">
+    <PropertyColumn Property="recurringexpense => recurringexpense.Name" />
+    <PropertyColumn Property="recurringexpense => recurringexpense.Description" />
+    <PropertyColumn Property="recurringexpense => recurringexpense.Amount" />
+    <PropertyColumn Property="recurringexpense => recurringexpense.PaymentFrequency" />
+    <PropertyColumn Property="recurringexpense => recurringexpense.PaymentDate" />
+
+    <TemplateColumn Context="recurringexpense">
+        <a href="@($"recurringexpenses/edit?id={recurringexpense.Id}")">Edit</a> |
+        <a href="@($"recurringexpenses/details?id={recurringexpense.Id}")">Details</a> |
+        <a href="@($"recurringexpenses/delete?id={recurringexpense.Id}")">Delete</a>
+    </TemplateColumn>
+</QuickGrid>
+
+@code {
+    private BudgetContext context = default!;
+
+    protected override void OnInitialized()
+    {
+        context = DbFactory.CreateDbContext();
+    }
+
+    public async ValueTask DisposeAsync() => await context.DisposeAsync();
+}
