@@ -1,0 +1,20 @@
+﻿@page "/expenses"
+@attribute [Authorize]
+
+<h3>Expenses</h3>
+
+<button @onclick="ShowAdd">Click me</button>
+
+@if(isAddVisible)
+{
+    <AddExpense />
+}
+
+@code {
+    private bool isAddVisible = false;
+
+    private void ShowAdd()
+    {
+        isAddVisible = true;
+    }
+}

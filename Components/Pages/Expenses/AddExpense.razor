@@ -1,0 +1,28 @@
+﻿@using Models
+@using System.ComponentModel.DataAnnotations
+
+<h3>Add Expense</h3>
+
+<EditForm Model="@Input">
+    <DataAnnotationsValidator />
+
+</EditForm>
+
+@code {
+    public class InputModel
+    {
+        [Required(ErrorMessage = "Name is required.")]
+        public string Name { get; set; }
+        [Required(ErrorMessage = "Description is required.")]
+        public string Description { get; set; }
+        [Required(ErrorMessage = "Amount is required.")]
+        public decimal Amount { get; set; }
+        [Required(ErrorMessage = "Frequency is required.")]
+        public Frequency ExpenseFrequency { get; set; }
+        [Required(ErrorMessage = "Date is required.")]
+        public DateTime PaymentDate { get; set; }
+        [Required]
+        public string Category { get; set; }
+    };
+    private InputModel Input = new();
+}
