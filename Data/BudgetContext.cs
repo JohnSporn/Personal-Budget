@@ -16,7 +16,8 @@ namespace Budget.Data
 
         public DbSet<User> User { get; set; } = default!;
         public DbSet<Income> Income { get; set; } = default!;
-        public DbSet<RecurringExpense> RecurringExpense { get; set; } = default!;
-        public DbSet<Transaction> Transaction { get; set; }
+        public DbSet<Expense> Expense { get; set; } = default!;
+        public DbSet<Transaction> Transaction { get; set; } = default!;
+        public DbSet<Category> Category { get; set; } = default!;
     }
 }

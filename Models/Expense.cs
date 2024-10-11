@@ -1,6 +1,6 @@
 ﻿namespace Budget.Models
 {
-    public class RecurringExpense
+    public class Expense
     {
         public int Id { get; set; }
         public string Name { get; set; }
